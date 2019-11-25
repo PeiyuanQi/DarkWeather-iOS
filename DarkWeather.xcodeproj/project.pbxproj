@@ -15,6 +15,7 @@
 		29A6E4D5238BACCE009A3F86 /* DarkWeather.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 29A6E4D3238BACCE009A3F86 /* DarkWeather.xcdatamodeld */; };
 		29A6E4D7238BACD1009A3F86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29A6E4D6238BACD1009A3F86 /* Assets.xcassets */; };
 		29A6E4DA238BACD1009A3F86 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29A6E4D8238BACD1009A3F86 /* LaunchScreen.storyboard */; };
+		29A6E4E2238BC58D009A3F86 /* CurrentLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A6E4E1238BC58D009A3F86 /* CurrentLocationViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		29A6E4D6238BACD1009A3F86 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		29A6E4D9238BACD1009A3F86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		29A6E4DB238BACD1009A3F86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		29A6E4E1238BC58D009A3F86 /* CurrentLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationViewController.swift; sourceTree = "<group>"; };
 		4A4B49F23FD3F2C89EB356F8 /* Pods_DarkWeather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DarkWeather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -73,6 +75,7 @@
 				29A6E4D8238BACD1009A3F86 /* LaunchScreen.storyboard */,
 				29A6E4DB238BACD1009A3F86 /* Info.plist */,
 				29A6E4D3238BACCE009A3F86 /* DarkWeather.xcdatamodeld */,
+				29A6E4E1238BC58D009A3F86 /* CurrentLocationViewController.swift */,
 			);
 			path = DarkWeather;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				29A6E4CF238BACCE009A3F86 /* ViewController.swift in Sources */,
+				29A6E4E2238BC58D009A3F86 /* CurrentLocationViewController.swift in Sources */,
 				29A6E4CB238BACCE009A3F86 /* AppDelegate.swift in Sources */,
 				29A6E4D5238BACCE009A3F86 /* DarkWeather.xcdatamodeld in Sources */,
 				29A6E4CD238BACCE009A3F86 /* SceneDelegate.swift in Sources */,
