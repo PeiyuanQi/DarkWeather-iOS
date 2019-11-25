@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2960E4FD743C736A937E8D61 /* Pods_DarkWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4B49F23FD3F2C89EB356F8 /* Pods_DarkWeather.framework */; };
 		29A6E4CB238BACCE009A3F86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A6E4CA238BACCE009A3F86 /* AppDelegate.swift */; };
 		29A6E4CD238BACCE009A3F86 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A6E4CC238BACCE009A3F86 /* SceneDelegate.swift */; };
 		29A6E4CF238BACCE009A3F86 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A6E4CE238BACCE009A3F86 /* ViewController.swift */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		035F296520ECCC4062AEC65A /* Pods-DarkWeather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DarkWeather.release.xcconfig"; path = "Target Support Files/Pods-DarkWeather/Pods-DarkWeather.release.xcconfig"; sourceTree = "<group>"; };
+		1ECE7E9B95AA426EBF891D28 /* Pods-DarkWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DarkWeather.debug.xcconfig"; path = "Target Support Files/Pods-DarkWeather/Pods-DarkWeather.debug.xcconfig"; sourceTree = "<group>"; };
 		29A6E4C7238BACCE009A3F86 /* DarkWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DarkWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29A6E4CA238BACCE009A3F86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29A6E4CC238BACCE009A3F86 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -26,6 +29,7 @@
 		29A6E4D6238BACD1009A3F86 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		29A6E4D9238BACD1009A3F86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		29A6E4DB238BACD1009A3F86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A4B49F23FD3F2C89EB356F8 /* Pods_DarkWeather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DarkWeather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2960E4FD743C736A937E8D61 /* Pods_DarkWeather.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +49,8 @@
 			children = (
 				29A6E4C9238BACCE009A3F86 /* DarkWeather */,
 				29A6E4C8238BACCE009A3F86 /* Products */,
+				9380709348ACF6D876950025 /* Pods */,
+				D71C7A0FF39F5E00BC113155 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -70,6 +77,24 @@
 			path = DarkWeather;
 			sourceTree = "<group>";
 		};
+		9380709348ACF6D876950025 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1ECE7E9B95AA426EBF891D28 /* Pods-DarkWeather.debug.xcconfig */,
+				035F296520ECCC4062AEC65A /* Pods-DarkWeather.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		D71C7A0FF39F5E00BC113155 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4A4B49F23FD3F2C89EB356F8 /* Pods_DarkWeather.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -77,9 +102,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 29A6E4DE238BACD1009A3F86 /* Build configuration list for PBXNativeTarget "DarkWeather" */;
 			buildPhases = (
+				6BF34415309233670056BFF9 /* [CP] Check Pods Manifest.lock */,
 				29A6E4C3238BACCE009A3F86 /* Sources */,
 				29A6E4C4238BACCE009A3F86 /* Frameworks */,
 				29A6E4C5238BACCE009A3F86 /* Resources */,
+				0DAF4ED7209D011B9B10D7D4 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -135,6 +162,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0DAF4ED7209D011B9B10D7D4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DarkWeather/Pods-DarkWeather-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DarkWeather/Pods-DarkWeather-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DarkWeather/Pods-DarkWeather-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6BF34415309233670056BFF9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DarkWeather-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		29A6E4C3238BACCE009A3F86 /* Sources */ = {
@@ -286,6 +355,7 @@
 		};
 		29A6E4DF238BACD1009A3F86 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1ECE7E9B95AA426EBF891D28 /* Pods-DarkWeather.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -304,6 +374,7 @@
 		};
 		29A6E4E0238BACD1009A3F86 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 035F296520ECCC4062AEC65A /* Pods-DarkWeather.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
