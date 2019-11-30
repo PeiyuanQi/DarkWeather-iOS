@@ -21,6 +21,23 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
     var currentCityStr = ""
     var currentTempStr = ""
     var currentSummary = ""
+    var currentIcon = "clear-day"
+    var currentHumidity = ""
+    var currentWindSpeed = ""
+    var currentVisibility = ""
+    var currentPressure = ""
+    let summaryIconMap = [
+        "clear-day": "weather-sunny",
+        "clear-night" : "weather-night",
+        "rain" : "weather-rainy",
+        "sleet" : "weather-snowy-rainy",
+        "snow" : "weather-snowy",
+        "wind" : "weather-windy-variant",
+        "fog" : "weather-fog",
+        "cloudy" : "weather-cloudy",
+        "partly-cloudy-night" : "weather-night-partly-cloudy",
+        "partly-cloudy-day" : "weather-partly-cloudy",
+    ]
     
     // Related to get current location
     var locationManager: CLLocationManager?
@@ -107,15 +124,30 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
     }
     
     func currentWeatherCallback(currentJsonObj: [String:Any]?) -> Void{
-        print(currentJsonObj?["summary"] ?? currentJsonObj!)
+        print(currentJsonObj!)
         
         self.currentTempStr = String(format:"%.0f", currentJsonObj?["temperature"] as! Double) + "°F"
-        self.currentSummary = currentJsonObj?["summary"] as! String 
+        self.currentSummary = currentJsonObj?["summary"] as! String
+        self.currentIcon = currentJsonObj?["icon"] as! String
+        self.currentHumidity = String(format: "%.1f", round(currentJsonObj?["humidity"] as! Double * 1000 / 10)) + " %"
+        self.currentWindSpeed = String(format: "%.2f", currentJsonObj?["windSpeed"] as! Double) + " mph"
+        self.currentVisibility = String(currentJsonObj?["visibility"] as! Double) + " km"
+        self.currentPressure = String(currentJsonObj?["pressure"] as! Double) + " mb"
             
         self.slides[0].tempLabel.text = self.currentTempStr
         self.slides[0].summaryLabel.text = self.currentSummary
+        self.slides[0].humidityLabel.text = self.currentHumidity
+        self.slides[0].windSpeedLabel.text = self.currentWindSpeed
+        self.slides[0].visibilityLabel.text = self.currentVisibility
+        self.slides[0].pressureLabel.text = self.currentPressure
+        self.slides[0].weatherIcon.image = UIImage(named: self.summaryIconMap[self.currentIcon] ?? "weather-sunny")
+        print("Finish Current Callback")
         
         return
+    }
+    
+    func weeklyWeatherCallback(currentJsonObj: [String:Any]?) -> Void{
+        <#function body#>
     }
     
     func getCurrentLocation(locations: [CLLocation]) {
@@ -138,7 +170,7 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
                     let weatherClient = WeatherRequest()
                     weatherClient.setLat(thislat: String(format: "%.8f", lastCoord?.coordinate.latitude ?? "0.0"))
                     weatherClient.setLng(thislng: String(format: "%.8f", lastCoord?.coordinate.longitude ?? "0.0"))
-                    weatherClient.getCurrentlyWeekly(handleCurrently: self.currentWeatherCallback)
+                    weatherClient.getCurrentlyWeekly(handleCurrently: self.currentWeatherCallback, handleWeekly: self.weeklyWeatherCallback)
                     
                     
                 }
@@ -196,7 +228,7 @@ class WeatherRequest{
         self.lng = thislng
     }
     
-    func getCurrentlyWeekly(handleCurrently: @escaping ([String:Any]?) -> Void) {
+    func getCurrentlyWeekly(handleCurrently: @escaping ([String:Any]?) -> Void, handleWeekly: @escaping ([String:Any]?) -> Void) {
         guard let url = URL(string: baseURL + "currently") else {
             handleCurrently(nil)
             return
@@ -220,8 +252,9 @@ class WeatherRequest{
             }
             
             let currentWeatherInfo = value["currently"] as? [String: Any]
-
             handleCurrently(currentWeatherInfo)
+            let weeklyWeatherInfo = value["daily"] as? [String: Any]
+            handleWeekly(weeklyWeatherInfo)
         }
     }
     
