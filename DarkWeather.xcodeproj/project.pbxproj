@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2919DE9F239250190045ECDD /* WeeklyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2919DE9D239250190045ECDD /* WeeklyTableViewCell.swift */; };
+		2919DEA0239250190045ECDD /* WeeklyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2919DE9E239250190045ECDD /* WeeklyTableViewCell.xib */; };
 		2960E4FD743C736A937E8D61 /* Pods_DarkWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4B49F23FD3F2C89EB356F8 /* Pods_DarkWeather.framework */; };
 		29A6E4CB238BACCE009A3F86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A6E4CA238BACCE009A3F86 /* AppDelegate.swift */; };
 		29A6E4CD238BACCE009A3F86 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A6E4CC238BACCE009A3F86 /* SceneDelegate.swift */; };
@@ -24,6 +26,8 @@
 /* Begin PBXFileReference section */
 		035F296520ECCC4062AEC65A /* Pods-DarkWeather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DarkWeather.release.xcconfig"; path = "Target Support Files/Pods-DarkWeather/Pods-DarkWeather.release.xcconfig"; sourceTree = "<group>"; };
 		1ECE7E9B95AA426EBF891D28 /* Pods-DarkWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DarkWeather.debug.xcconfig"; path = "Target Support Files/Pods-DarkWeather/Pods-DarkWeather.debug.xcconfig"; sourceTree = "<group>"; };
+		2919DE9D239250190045ECDD /* WeeklyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyTableViewCell.swift; sourceTree = "<group>"; };
+		2919DE9E239250190045ECDD /* WeeklyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeeklyTableViewCell.xib; sourceTree = "<group>"; };
 		29A6E4C7238BACCE009A3F86 /* DarkWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DarkWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29A6E4CA238BACCE009A3F86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29A6E4CC238BACCE009A3F86 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +87,8 @@
 				29A6E4D8238BACD1009A3F86 /* LaunchScreen.storyboard */,
 				29A6E4DB238BACD1009A3F86 /* Info.plist */,
 				29A6E4D3238BACCE009A3F86 /* DarkWeather.xcdatamodeld */,
+				2919DE9D239250190045ECDD /* WeeklyTableViewCell.swift */,
+				2919DE9E239250190045ECDD /* WeeklyTableViewCell.xib */,
 			);
 			path = DarkWeather;
 			sourceTree = "<group>";
@@ -177,6 +183,7 @@
 				29A6E4DA238BACD1009A3F86 /* LaunchScreen.storyboard in Resources */,
 				29A6E4D7238BACD1009A3F86 /* Assets.xcassets in Resources */,
 				29A6E4D2238BACCE009A3F86 /* Main.storyboard in Resources */,
+				2919DEA0239250190045ECDD /* WeeklyTableViewCell.xib in Resources */,
 				29C01B1D238C9F35000B9938 /* Slide.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -230,6 +237,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2919DE9F239250190045ECDD /* WeeklyTableViewCell.swift in Sources */,
 				29A6E4CF238BACCE009A3F86 /* ViewController.swift in Sources */,
 				29C01B14238C5775000B9938 /* SearchBarViewController.swift in Sources */,
 				29C01B18238C887E000B9938 /* FavoriteViewController.swift in Sources */,

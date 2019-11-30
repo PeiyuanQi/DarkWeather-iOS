@@ -11,7 +11,16 @@ import CoreLocation
 import SwiftyJSON
 import Alamofire
 
-class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocationManagerDelegate {
+class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate {
+    
+    struct weeklyCellData {
+        var weatherIconStr:String
+        var dateStr:String
+        var sunsetTimeStr:String
+        var sunriseTimeStr:String
+    }
+
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var weatherPageScrollView: UIScrollView!
     @IBOutlet weak var pageControl: UIPageControl!
@@ -26,6 +35,12 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
     var currentWindSpeed = ""
     var currentVisibility = ""
     var currentPressure = ""
+    var weeklySummary = ""
+    var weeklyIcon = "clear-day"
+    var weeklyData:[[String: Any]] = []
+    var arrayOfWeeklyCellData:[weeklyCellData] = []
+    
+    
     let summaryIconMap = [
         "clear-day": "weather-sunny",
         "clear-night" : "weather-night",
@@ -57,10 +72,22 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
         pageControl.currentPage = 0
         view.bringSubviewToFront(pageControl)
         
+        
+//        for i in 0..<arrayOfWeeklyCellData.count {
+//            slides[i].weeklyTableView.dataSource = self
+//            slides[i].weeklyTableView.delegate = self
+//        }
+  
+        slides[0].weeklyTableView.register(UINib(nibName: "WeeklyTableViewCell", bundle: nil), forCellReuseIdentifier: "WeeklyCellFromNib")
+        slides[0].weeklyTableView.dataSource = self
+        slides[0].weeklyTableView.delegate = self
+        
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         locationManager?.requestWhenInUseAuthorization()
         locationManager?.requestLocation()
+        
+        slides[0].weeklyTableView.reloadData()
 
     }
     
@@ -124,7 +151,7 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
     }
     
     func currentWeatherCallback(currentJsonObj: [String:Any]?) -> Void{
-        print(currentJsonObj!)
+//        print(currentJsonObj!)
         
         self.currentTempStr = String(format:"%.0f", currentJsonObj?["temperature"] as! Double) + "°F"
         self.currentSummary = currentJsonObj?["summary"] as! String
@@ -146,8 +173,50 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
         return
     }
     
-    func weeklyWeatherCallback(currentJsonObj: [String:Any]?) -> Void{
-        <#function body#>
+    //todo to finish translate
+    func translateDate(timestamp: TimeInterval) -> String{
+        let date = Date(timeIntervalSince1970: timestamp)
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "PST")
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+        let returnDate = dateFormatter.string(from: date)
+        return returnDate
+    }
+    
+    func translatePST(timestamp: TimeInterval) -> String{
+        let date = Date(timeIntervalSince1970: timestamp)
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "PST")
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "HH:mm"
+        let returnDate = dateFormatter.string(from: date)
+        return returnDate
+    }
+    
+    func weeklyWeatherCallback(weekJsonObj: [String:Any]?) -> Void{
+//        print(weekJsonObj!)
+        
+        self.weeklySummary = weekJsonObj?["summary"] as! String
+        self.weeklyIcon = weekJsonObj?["icon"] as! String
+        
+        self.weeklyData = weekJsonObj?["data"] as! [[String:Any]]
+        
+        for i in 0 ... 7 {
+            let currentCell = weeklyCellData(
+                weatherIconStr: self.summaryIconMap[self.weeklyData[i]["icon"] as! String] ?? "clear-day",
+                dateStr: self.translateDate(timestamp: self.weeklyData[i]["time"] as! TimeInterval),
+                sunsetTimeStr: self.translatePST(timestamp: self.weeklyData[i]["sunsetTime"] as! TimeInterval),
+                sunriseTimeStr: self.translatePST(timestamp: self.weeklyData[i]["sunriseTime"] as! TimeInterval)
+            )
+            arrayOfWeeklyCellData.append(currentCell)
+        }
+        
+        print(arrayOfWeeklyCellData.count)
+        slides[0].weeklyTableView.reloadData()
+        
+        return
+        
     }
     
     func getCurrentLocation(locations: [CLLocation]) {
@@ -187,6 +256,38 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
     }
     
     // END of get current location
+    
+    
+    
+    // ****************
+    // Weekly Table View Override
+    // ****************
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("tell table: " + String(arrayOfWeeklyCellData.count))
+        return arrayOfWeeklyCellData.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = Bundle.main.loadNibNamed("WeeklyTableViewCell", owner: self, options: nil)?.first as! WeeklyTableViewCell
+        print("cellForRowAt")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "WeeklyCellFromNib", for: indexPath) as! WeeklyTableViewCell
+        cell.weatherImgView.image = UIImage(named: arrayOfWeeklyCellData[indexPath.row].weatherIconStr)
+        cell.dateLabel.text = arrayOfWeeklyCellData[indexPath.row].dateStr
+        cell.sunriseTimeLabel.text = arrayOfWeeklyCellData[indexPath.row].sunriseTimeStr
+        cell.sunsetTimeLabel.text = arrayOfWeeklyCellData[indexPath.row].sunsetTimeStr
+        return cell
+    }
+    
+    // END of weekly table view override
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     /*
     // MARK: - Navigation

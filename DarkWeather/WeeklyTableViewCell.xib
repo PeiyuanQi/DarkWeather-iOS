@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="56" id="KGk-i7-Jjw" customClass="WeeklyTableViewCell" customModule="DarkWeather" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="368" height="56"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="368" height="56"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O2O-tF-1Nf">
+                        <rect key="frame" x="0.0" y="21" width="95" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="95" id="HRO-Eq-x4m"/>
+                            <constraint firstAttribute="height" constant="21" id="jtp-JM-Ojv"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XQn-WV-s5H">
+                        <rect key="frame" x="151" y="20" width="56" height="25"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0dC-Lc-h7P">
+                        <rect key="frame" x="258" y="20" width="56" height="25"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="weather-sunset-down" translatesAutoresizingMaskIntoConstraints="NO" id="og9-fQ-VnC">
+                        <rect key="frame" x="324" y="14" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="3qQ-Rr-9yB"/>
+                            <constraint firstAttribute="height" constant="40" id="v9W-VU-L6K"/>
+                        </constraints>
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="weather-sunset-up" translatesAutoresizingMaskIntoConstraints="NO" id="sb3-K0-YSk">
+                        <rect key="frame" x="212" y="14" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="8tm-FN-oCw"/>
+                            <constraint firstAttribute="height" constant="40" id="MHF-Ka-Dkp"/>
+                        </constraints>
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cmb-k3-m4q">
+                        <rect key="frame" x="105" y="12" width="38" height="38"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="38" id="LjT-i6-jRK"/>
+                            <constraint firstAttribute="width" constant="38" id="V4B-HR-L42"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="sb3-K0-YSk" secondAttribute="bottom" constant="2" id="1hb-2s-vK7"/>
+                    <constraint firstAttribute="trailing" secondItem="sb3-K0-YSk" secondAttribute="trailing" constant="116" id="CcD-lr-79v"/>
+                    <constraint firstAttribute="bottom" secondItem="O2O-tF-1Nf" secondAttribute="bottom" constant="14" id="OzE-iG-mfe"/>
+                    <constraint firstAttribute="bottom" secondItem="cmb-k3-m4q" secondAttribute="bottom" constant="6" id="R5v-qw-czC"/>
+                    <constraint firstItem="O2O-tF-1Nf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Uwt-zT-yMY"/>
+                    <constraint firstAttribute="trailing" secondItem="og9-fQ-VnC" secondAttribute="trailing" constant="4" id="aLz-s4-2AF"/>
+                    <constraint firstAttribute="bottom" secondItem="og9-fQ-VnC" secondAttribute="bottom" constant="2" id="geK-bA-O4t"/>
+                    <constraint firstAttribute="trailing" secondItem="cmb-k3-m4q" secondAttribute="trailing" constant="225" id="lvd-KH-W8A"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="dateLabel" destination="O2O-tF-1Nf" id="nZO-ib-Exm"/>
+                <outlet property="sunriseTimeLabel" destination="XQn-WV-s5H" id="eEy-ZL-4aB"/>
+                <outlet property="sunsetTimeLabel" destination="0dC-Lc-h7P" id="Vf6-wp-3EY"/>
+                <outlet property="weatherImgView" destination="cmb-k3-m4q" id="ZCw-cb-5LG"/>
+            </connections>
+            <point key="canvasLocation" x="166.66666666666669" y="149.33035714285714"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="weather-sunset-down" width="24" height="24"/>
+        <image name="weather-sunset-up" width="24" height="24"/>
+    </resources>
+</document>
