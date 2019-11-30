@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../../../../../../Downloads/USC.gpx">
+   </FileRef>
+   <FileRef
       location = "group:DarkWeather.xcodeproj">
    </FileRef>
    <FileRef

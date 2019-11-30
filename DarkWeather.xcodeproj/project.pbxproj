@@ -15,7 +15,10 @@
 		29A6E4D5238BACCE009A3F86 /* DarkWeather.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 29A6E4D3238BACCE009A3F86 /* DarkWeather.xcdatamodeld */; };
 		29A6E4D7238BACD1009A3F86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29A6E4D6238BACD1009A3F86 /* Assets.xcassets */; };
 		29A6E4DA238BACD1009A3F86 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29A6E4D8238BACD1009A3F86 /* LaunchScreen.storyboard */; };
-		29A6E4E2238BC58D009A3F86 /* CurrentLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A6E4E1238BC58D009A3F86 /* CurrentLocationViewController.swift */; };
+		29C01B14238C5775000B9938 /* SearchBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C01B13238C5775000B9938 /* SearchBarViewController.swift */; };
+		29C01B18238C887E000B9938 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C01B17238C887E000B9938 /* FavoriteViewController.swift */; };
+		29C01B1B238C9F19000B9938 /* Slide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C01B1A238C9F19000B9938 /* Slide.swift */; };
+		29C01B1D238C9F35000B9938 /* Slide.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29C01B1C238C9F35000B9938 /* Slide.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,7 +33,10 @@
 		29A6E4D6238BACD1009A3F86 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		29A6E4D9238BACD1009A3F86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		29A6E4DB238BACD1009A3F86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		29A6E4E1238BC58D009A3F86 /* CurrentLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationViewController.swift; sourceTree = "<group>"; };
+		29C01B13238C5775000B9938 /* SearchBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarViewController.swift; sourceTree = "<group>"; };
+		29C01B17238C887E000B9938 /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
+		29C01B1A238C9F19000B9938 /* Slide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slide.swift; sourceTree = "<group>"; };
+		29C01B1C238C9F35000B9938 /* Slide.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Slide.xib; sourceTree = "<group>"; };
 		4A4B49F23FD3F2C89EB356F8 /* Pods_DarkWeather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DarkWeather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -67,17 +73,28 @@
 		29A6E4C9238BACCE009A3F86 /* DarkWeather */ = {
 			isa = PBXGroup;
 			children = (
+				29C01B19238C888D000B9938 /* Controllers */,
 				29A6E4CA238BACCE009A3F86 /* AppDelegate.swift */,
 				29A6E4CC238BACCE009A3F86 /* SceneDelegate.swift */,
-				29A6E4CE238BACCE009A3F86 /* ViewController.swift */,
 				29A6E4D0238BACCE009A3F86 /* Main.storyboard */,
+				29C01B1A238C9F19000B9938 /* Slide.swift */,
+				29C01B1C238C9F35000B9938 /* Slide.xib */,
 				29A6E4D6238BACD1009A3F86 /* Assets.xcassets */,
 				29A6E4D8238BACD1009A3F86 /* LaunchScreen.storyboard */,
 				29A6E4DB238BACD1009A3F86 /* Info.plist */,
 				29A6E4D3238BACCE009A3F86 /* DarkWeather.xcdatamodeld */,
-				29A6E4E1238BC58D009A3F86 /* CurrentLocationViewController.swift */,
 			);
 			path = DarkWeather;
+			sourceTree = "<group>";
+		};
+		29C01B19238C888D000B9938 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				29C01B13238C5775000B9938 /* SearchBarViewController.swift */,
+				29A6E4CE238BACCE009A3F86 /* ViewController.swift */,
+				29C01B17238C887E000B9938 /* FavoriteViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		9380709348ACF6D876950025 /* Pods */ = {
@@ -160,6 +177,7 @@
 				29A6E4DA238BACD1009A3F86 /* LaunchScreen.storyboard in Resources */,
 				29A6E4D7238BACD1009A3F86 /* Assets.xcassets in Resources */,
 				29A6E4D2238BACCE009A3F86 /* Main.storyboard in Resources */,
+				29C01B1D238C9F35000B9938 /* Slide.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,10 +231,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				29A6E4CF238BACCE009A3F86 /* ViewController.swift in Sources */,
-				29A6E4E2238BC58D009A3F86 /* CurrentLocationViewController.swift in Sources */,
+				29C01B14238C5775000B9938 /* SearchBarViewController.swift in Sources */,
+				29C01B18238C887E000B9938 /* FavoriteViewController.swift in Sources */,
 				29A6E4CB238BACCE009A3F86 /* AppDelegate.swift in Sources */,
 				29A6E4D5238BACCE009A3F86 /* DarkWeather.xcdatamodeld in Sources */,
 				29A6E4CD238BACCE009A3F86 /* SceneDelegate.swift in Sources */,
+				29C01B1B238C9F19000B9938 /* Slide.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
