@@ -10,13 +10,13 @@
         <!--SearchBarViewController-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="SearchBarViewController" title="SearchBarViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" userLabel="SearchBarViewController" customClass="SearchBarViewController" customModule="DarkWeather" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                <viewController storyboardIdentifier="SearchBarViewController" title="Weather" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" userLabel="SearchBarViewController" customClass="SearchBarViewController" customModule="DarkWeather" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" userLabel="Weather">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="4Sb-8y-PvO">
-                                <rect key="frame" x="-3787" y="0.0" width="4201" height="808.00000000000182"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="4Sb-8y-PvO">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" ambiguous="YES" bounces="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zyN-EO-4bw">
                                 <rect key="frame" x="20" y="20" width="374" height="709"/>
@@ -31,11 +31,22 @@
                                 <rect key="frame" x="188" y="737" width="39" height="37"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             </pageControl>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aY2-aq-Uqp">
+                                <rect key="frame" x="20" y="0.0" width="374" height="256"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="374" id="3AX-nk-YRV"/>
+                                    <constraint firstAttribute="height" constant="256" id="EfS-0U-6Qz"/>
+                                </constraints>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="4Sb-8y-PvO" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="4hm-xc-NKr"/>
+                            <constraint firstItem="aY2-aq-Uqp" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="8sY-Za-Iuw"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="zyN-EO-4bw" secondAttribute="bottom" constant="45" id="HD5-Aw-shL"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="aY2-aq-Uqp" secondAttribute="trailing" constant="20" id="Ohp-xm-Qfr"/>
+                            <constraint firstItem="aY2-aq-Uqp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="TGY-Jg-kMO"/>
                             <constraint firstAttribute="bottom" secondItem="4Sb-8y-PvO" secondAttribute="bottom" id="UcK-UG-0Gi"/>
                             <constraint firstItem="4Sb-8y-PvO" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="fWH-44-b6q"/>
                             <constraint firstItem="zyN-EO-4bw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="gS1-2l-q0S"/>
@@ -43,13 +54,15 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="1PN-X6-K9m"/>
+                    <navigationItem key="navigationItem" title="Weather" id="1PN-X6-K9m"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO"/>
                     <splitViewMasterSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="autoCompleteTableView" destination="aY2-aq-Uqp" id="VLm-XB-Lsg"/>
                         <outlet property="pageControl" destination="brO-eR-3E1" id="WCx-U4-Us7"/>
                         <outlet property="searchBar" destination="1AJ-fU-M81" id="Qre-rs-Fu3"/>
                         <outlet property="weatherPageScrollView" destination="zyN-EO-4bw" id="CBQ-Nd-15q"/>
+                        <segue destination="g77-X3-Kk2" kind="show" identifier="showSearchDetail" id="LDa-u3-Ke1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -61,6 +74,36 @@
             </objects>
             <point key="canvasLocation" x="-91.304347826086968" y="-731.25"/>
         </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="i1b-Eu-LbP">
+            <objects>
+                <viewController id="g77-X3-Kk2" customClass="DetailViewController" customModule="DarkWeather" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Z1A-6M-70C">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="pWL-5i-UBv">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="pWL-5i-UBv" secondAttribute="bottom" id="LFi-3h-ATS"/>
+                            <constraint firstItem="pWL-5i-UBv" firstAttribute="leading" secondItem="vnr-6g-yY2" secondAttribute="leading" id="fut-wr-imU"/>
+                            <constraint firstItem="pWL-5i-UBv" firstAttribute="top" secondItem="Z1A-6M-70C" secondAttribute="top" id="gLe-Ac-pE7"/>
+                            <constraint firstItem="pWL-5i-UBv" firstAttribute="trailing" secondItem="vnr-6g-yY2" secondAttribute="trailing" id="w6r-Vv-J98"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="vnr-6g-yY2"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="uy5-0P-MZG"/>
+                    <connections>
+                        <outlet property="weatherView" destination="Z1A-6M-70C" id="56a-rL-knz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rfe-Mz-F5v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="763.768115942029" y="-1078.125"/>
+        </scene>
         <!--Favorite View Controller-->
         <scene sceneID="r2W-pg-Eh7">
             <objects>
@@ -69,7 +112,23 @@
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2t7-px-0P1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="717" y="-731"/>
+            <point key="canvasLocation" x="1470" y="-618"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="25L-kV-QHV">
+            <objects>
+                <viewController id="rEz-wi-LTd" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="F9o-Q0-Xy1">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="kJb-RW-oCJ"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="OBe-wM-BRQ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dyj-np-st2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-155" y="1228"/>
         </scene>
         <!--Item 2-->
         <scene sceneID="MMF-9M-XHn">
@@ -85,7 +144,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PiI-su-nHF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="717" y="650"/>
+            <point key="canvasLocation" x="716" y="543"/>
         </scene>
         <!--Item 1-->
         <scene sceneID="zDl-gq-Ozy">
@@ -101,7 +160,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jVZ-pr-Aod" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="717" y="-5"/>
+            <point key="canvasLocation" x="716" y="-120"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="kN2-VJ-pEN">
@@ -115,11 +174,12 @@
                     <connections>
                         <segue destination="ffD-nf-bBQ" kind="relationship" relationship="viewControllers" id="eAc-Yq-nJh"/>
                         <segue destination="9mv-kg-Y1h" kind="relationship" relationship="viewControllers" id="udq-2Q-gC2"/>
+                        <segue destination="rEz-wi-LTd" kind="relationship" relationship="viewControllers" id="Vun-ql-Zcl"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PuM-Gp-i0l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-91" y="-5"/>
+            <point key="canvasLocation" x="-91" y="250"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="KNz-2t-APj">

@@ -10,8 +10,9 @@ import UIKit
 import CoreLocation
 import SwiftyJSON
 import Alamofire
+import SwiftSpinner
 
-class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate {
+class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate {
     
     struct weeklyCellData {
         var weatherIconStr:String
@@ -24,6 +25,8 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var weatherPageScrollView: UIScrollView!
     @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var autoCompleteTableView: UITableView!
+    
     var locastionList = ["a", "b"]
     var currentWeatherControllerIndex = 0
     var slides:[Slide] = []
@@ -39,6 +42,18 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
     var weeklyIcon = "clear-day"
     var weeklyData:[[String: Any]] = []
     var arrayOfWeeklyCellData:[weeklyCellData] = []
+    
+    var cityList:[String] = []{
+       didSet {
+          if cityList.count > 0 {
+            autoCompleteTableView.isHidden = false
+            autoCompleteTableView.reloadData()
+          } else {
+             autoCompleteTableView.isHidden = true
+          }
+       }
+    }
+    var selectedCityStr = ""
     
     
     let summaryIconMap = [
@@ -58,7 +73,11 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
     var locationManager: CLLocationManager?
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
+        SwiftSpinner.show("Loading...")
+        
         let leftNavBarButton = UIBarButtonItem(customView: searchBar)
         self.navigationItem.leftBarButtonItem = leftNavBarButton
         
@@ -82,11 +101,20 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
         slides[0].weeklyTableView.dataSource = self
         slides[0].weeklyTableView.delegate = self
         
+        // autocomplete
+        searchBar.delegate = self
+        autoCompleteTableView.dataSource = self
+        autoCompleteTableView.delegate = self
+        autoCompleteTableView.register(UINib(nibName: "CityTableViewCell", bundle: nil), forCellReuseIdentifier: "CityCellFromNib")
+        autoCompleteTableView.isHidden = true
+        
+        // location get
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         locationManager?.requestWhenInUseAuthorization()
         locationManager?.requestLocation()
         
+        // refresh data for table view
         slides[0].weeklyTableView.reloadData()
 
     }
@@ -173,7 +201,6 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
         return
     }
     
-    //todo to finish translate
     func translateDate(timestamp: TimeInterval) -> String{
         let date = Date(timeIntervalSince1970: timestamp)
         let dateFormatter = DateFormatter()
@@ -214,6 +241,7 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
         
         print(arrayOfWeeklyCellData.count)
         slides[0].weeklyTableView.reloadData()
+        SwiftSpinner.hide()
         
         return
         
@@ -260,27 +288,83 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
     
     
     // ****************
-    // Weekly Table View Override
+    // Table View Override
     // ****************
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("tell table: " + String(arrayOfWeeklyCellData.count))
-        return arrayOfWeeklyCellData.count
+        if tableView == autoCompleteTableView {
+            print("city table: " + String(arrayOfWeeklyCellData.count))
+            return cityList.count
+        } else {
+            print("week table: " + String(arrayOfWeeklyCellData.count))
+            return arrayOfWeeklyCellData.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        let cell = Bundle.main.loadNibNamed("WeeklyTableViewCell", owner: self, options: nil)?.first as! WeeklyTableViewCell
-        print("cellForRowAt")
-        let cell = tableView.dequeueReusableCell(withIdentifier: "WeeklyCellFromNib", for: indexPath) as! WeeklyTableViewCell
-        cell.weatherImgView.image = UIImage(named: arrayOfWeeklyCellData[indexPath.row].weatherIconStr)
-        cell.dateLabel.text = arrayOfWeeklyCellData[indexPath.row].dateStr
-        cell.sunriseTimeLabel.text = arrayOfWeeklyCellData[indexPath.row].sunriseTimeStr
-        cell.sunsetTimeLabel.text = arrayOfWeeklyCellData[indexPath.row].sunsetTimeStr
-        return cell
+//        print("cellForRowAt")
+        if tableView == autoCompleteTableView {
+            print("cellForRowAt for autocomplete")
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CityCellFromNib", for: indexPath) as! CityTableViewCell
+            cell.cityLabel.text = cityList[indexPath.row]
+            return cell
+        } else {
+            print("cellForRowAt for weekly")
+            let cell = tableView.dequeueReusableCell(withIdentifier: "WeeklyCellFromNib", for: indexPath) as! WeeklyTableViewCell
+            cell.weatherImgView.image = UIImage(named: arrayOfWeeklyCellData[indexPath.row].weatherIconStr)
+            cell.dateLabel.text = arrayOfWeeklyCellData[indexPath.row].dateStr
+            cell.sunriseTimeLabel.text = arrayOfWeeklyCellData[indexPath.row].sunriseTimeStr
+            cell.sunsetTimeLabel.text = arrayOfWeeklyCellData[indexPath.row].sunsetTimeStr
+            return cell
+        }
+        
     }
     
-    // END of weekly table view override
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == autoCompleteTableView {
+            self.selectedCityStr = self.cityList[indexPath.row]
+            tableView.deselectRow(at: indexPath, animated: true)
+            performSegue(withIdentifier: "showSearchDetail", sender: self)
+        }
+    }
     
     
+    
+    
+    // END of table view override
+    
+    // ****************
+    // Search Bar Update
+    // ****************
+    
+    func handleAutoComplete(listOfReturnCities: [String]){
+        cityList = listOfReturnCities
+//        for each in listOfReturnCities {
+//            cityList.append(each.value as! String)
+//        }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print("Search input: " + searchText)
+        let url = "http://webhw9-12345.appspot.com/autocomplete"
+        Alamofire.request(url,
+                  method: .get,
+                  parameters: ["currentString": searchText])
+        .validate()
+        .responseJSON { response in
+            guard response.result.isSuccess else {
+                print("Error while fetching autocomplete: (String(describing: response.result.error)")
+                return
+            }
+
+            guard let value = response.result.value as? [String] else {
+                print("Malformed data received from autocomplete service")
+                return
+            }
+            
+            self.handleAutoComplete(listOfReturnCities: value)
+        }
+    }
     
     
     
@@ -299,6 +383,14 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
     }
     */
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.destination is DetailViewController {
+            
+            let vc = segue.destination as? DetailViewController
+            vc?.cityString = self.selectedCityStr            
+        }
+    }
+    
 
     
 
@@ -310,7 +402,7 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
 // ******************
 
 class WeatherRequest{
-    let baseURL = "http://localhost:3000/weather/"
+    let baseURL = "http://webhw9-12345.appspot.com/weather/"
     var lat:String, lng:String
     
     var onDataUpdate: ((_ data: String) -> Void)?
@@ -341,7 +433,7 @@ class WeatherRequest{
         .validate()
         .responseJSON { response in
             guard response.result.isSuccess else {
-                print("Error while fetching remote rooms: (String(describing: response.result.error)")
+                print("Error while fetching weather: (String(describing: response.result.error)")
                 handleCurrently(nil)
                 return
             }
