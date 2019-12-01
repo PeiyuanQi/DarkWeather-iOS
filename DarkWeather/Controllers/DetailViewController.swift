@@ -123,6 +123,11 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
         }
     
+    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+        print("handleTapInDetail")
+        performSegue(withIdentifier: "showTabFromDetail", sender: self)
+    }
+    
     override func viewDidLoad() {
         let city = String(self.cityString.split(separator: ",").first!)
         SwiftSpinner.show("Fetching Weather Details for " + city + "...")
@@ -141,6 +146,10 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         slideView.weeklyTableView.register(UINib(nibName: "WeeklyTableViewCell", bundle: nil), forCellReuseIdentifier: "WeeklyCellFromNib")
         
         slideView.locationLabel.text = city
+        
+        // segue detect for detail tabs
+        let tapOnCard = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        slideView.weatherCardView.addGestureRecognizer(tapOnCard)
         
         
         var clickedLat = ""

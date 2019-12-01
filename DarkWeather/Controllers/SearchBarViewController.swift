@@ -119,10 +119,21 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
 
     }
     
+    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+        print("handleTap")
+        performSegue(withIdentifier: "showTabFromDefault", sender: self)
+    }
+    
     // START related to slides
     func createSlides() -> [Slide] {
 
         let slide1:Slide = Bundle.main.loadNibNamed("Slide", owner: self, options: nil)?.first as! Slide
+        // segue detect for detail tabs
+        let tapOnCard = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        slide1.weatherCardView.addGestureRecognizer(tapOnCard)
+        
+        
+        
         
         let slide2:Slide = Bundle.main.loadNibNamed("Slide", owner: self, options: nil)?.first as! Slide
         slide2.locationLabel.text = "A real-life second view"

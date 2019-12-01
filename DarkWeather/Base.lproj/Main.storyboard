@@ -63,6 +63,7 @@
                         <outlet property="searchBar" destination="1AJ-fU-M81" id="Qre-rs-Fu3"/>
                         <outlet property="weatherPageScrollView" destination="zyN-EO-4bw" id="CBQ-Nd-15q"/>
                         <segue destination="g77-X3-Kk2" kind="show" identifier="showSearchDetail" id="LDa-u3-Ke1"/>
+                        <segue destination="QKw-Qg-NXi" kind="show" identifier="showTabFromDefault" id="MQ4-nB-f95"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -98,6 +99,7 @@
                     <navigationItem key="navigationItem" id="uy5-0P-MZG"/>
                     <connections>
                         <outlet property="weatherView" destination="Z1A-6M-70C" id="56a-rL-knz"/>
+                        <segue destination="QKw-Qg-NXi" kind="show" identifier="showTabFromDetail" id="uxA-LV-1he"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rfe-Mz-F5v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -119,7 +121,7 @@
             <objects>
                 <viewController id="rEz-wi-LTd" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="F9o-Q0-Xy1">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="kJb-RW-oCJ"/>
@@ -135,7 +137,7 @@
             <objects>
                 <viewController id="9mv-kg-Y1h" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QDX-Tc-vbk">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="Lbi-th-68i"/>
@@ -151,7 +153,7 @@
             <objects>
                 <viewController id="ffD-nf-bBQ" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cdI-Yq-FV3">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="SJF-HI-SPM"/>
@@ -166,6 +168,7 @@
         <scene sceneID="kN2-VJ-pEN">
             <objects>
                 <tabBarController id="QKw-Qg-NXi" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="buo-tv-4ic"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0Qy-P3-TbP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -201,4 +204,7 @@
     <resources>
         <image name="background" width="4201" height="6302"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="uxA-LV-1he"/>
+    </inferredMetricsTieBreakers>
 </document>

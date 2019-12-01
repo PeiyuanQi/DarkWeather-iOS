@@ -34,8 +34,7 @@ class Slide: UIView {
     // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
         self.weatherCardView.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.4)
-        let tapOnCard = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-        self.weatherCardView.addGestureRecognizer(tapOnCard)
+        
         self.weatherCardView.layer.cornerRadius = 5;
         self.weatherCardView.layer.masksToBounds = true;
         self.weatherCardView.layer.borderWidth = 1;
@@ -45,10 +44,5 @@ class Slide: UIView {
             favButtonOutlet.setImage(UIImage(named: "trash-can"), for: .normal)
         }
     }
-    
-    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
-        print("handleTap")
-    }
-    
 
 }
