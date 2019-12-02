@@ -12,6 +12,10 @@
 		2919DEA32393194A0045ECDD /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2919DEA12393194A0045ECDD /* CityTableViewCell.swift */; };
 		2919DEA42393194A0045ECDD /* CityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2919DEA22393194A0045ECDD /* CityTableViewCell.xib */; };
 		2919DEA8239344A70045ECDD /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2919DEA7239344A70045ECDD /* DetailViewController.swift */; };
+		2919DEAC23940F4F0045ECDD /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2919DEAB23940F4F0045ECDD /* TabBarViewController.swift */; };
+		2919DEAE23941CCD0045ECDD /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2919DEAD23941CCD0045ECDD /* TodayViewController.swift */; };
+		2919DEB023941CDA0045ECDD /* WeeklyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2919DEAF23941CDA0045ECDD /* WeeklyViewController.swift */; };
+		2919DEB223941CE50045ECDD /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2919DEB123941CE50045ECDD /* PhotoViewController.swift */; };
 		2960E4FD743C736A937E8D61 /* Pods_DarkWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4B49F23FD3F2C89EB356F8 /* Pods_DarkWeather.framework */; };
 		29A6E4CB238BACCE009A3F86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A6E4CA238BACCE009A3F86 /* AppDelegate.swift */; };
 		29A6E4CD238BACCE009A3F86 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A6E4CC238BACCE009A3F86 /* SceneDelegate.swift */; };
@@ -33,6 +37,10 @@
 		2919DEA12393194A0045ECDD /* CityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
 		2919DEA22393194A0045ECDD /* CityTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityTableViewCell.xib; sourceTree = "<group>"; };
 		2919DEA7239344A70045ECDD /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		2919DEAB23940F4F0045ECDD /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		2919DEAD23941CCD0045ECDD /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		2919DEAF23941CDA0045ECDD /* WeeklyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyViewController.swift; sourceTree = "<group>"; };
+		2919DEB123941CE50045ECDD /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		29A6E4C7238BACCE009A3F86 /* DarkWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DarkWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29A6E4CA238BACCE009A3F86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29A6E4CC238BACCE009A3F86 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +113,10 @@
 				29C01B13238C5775000B9938 /* SearchBarViewController.swift */,
 				29C01B17238C887E000B9938 /* FavoriteViewController.swift */,
 				2919DEA7239344A70045ECDD /* DetailViewController.swift */,
+				2919DEAB23940F4F0045ECDD /* TabBarViewController.swift */,
+				2919DEAD23941CCD0045ECDD /* TodayViewController.swift */,
+				2919DEAF23941CDA0045ECDD /* WeeklyViewController.swift */,
+				2919DEB123941CE50045ECDD /* PhotoViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -252,7 +264,11 @@
 				29A6E4CB238BACCE009A3F86 /* AppDelegate.swift in Sources */,
 				29A6E4D5238BACCE009A3F86 /* DarkWeather.xcdatamodeld in Sources */,
 				29A6E4CD238BACCE009A3F86 /* SceneDelegate.swift in Sources */,
+				2919DEAC23940F4F0045ECDD /* TabBarViewController.swift in Sources */,
+				2919DEB023941CDA0045ECDD /* WeeklyViewController.swift in Sources */,
 				29C01B1B238C9F19000B9938 /* Slide.swift in Sources */,
+				2919DEAE23941CCD0045ECDD /* TodayViewController.swift in Sources */,
+				2919DEB223941CE50045ECDD /* PhotoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

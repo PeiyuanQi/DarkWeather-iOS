@@ -12,7 +12,10 @@ import SwiftyJSON
 import Alamofire
 import SwiftSpinner
 
-class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate {
+var mapOfFavCitiesNames : [String:Int] = [:]
+var slides:[Slide] = []
+
+class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate, favListDelegate {
     
     struct weeklyCellData {
         var weatherIconStr:String
@@ -29,7 +32,6 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
     
     var locastionList = ["a", "b"]
     var currentWeatherControllerIndex = 0
-    var slides:[Slide] = []
     var currentCityStr = ""
     var currentTempStr = ""
     var currentSummary = ""
@@ -42,6 +44,7 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
     var weeklyIcon = "clear-day"
     var weeklyData:[[String: Any]] = []
     var arrayOfWeeklyCellData:[weeklyCellData] = []
+    var currentWeather : [String:Any] = [:]
     
     var cityList:[String] = []{
        didSet {
@@ -71,49 +74,174 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
     
     // Related to get current location
     var locationManager: CLLocationManager?
+
+//    // Fav Related not working
+//    func updateFav() {
+//
+//        let favListStr = UserDefaults.standard.string(forKey: "favList") ?? ""
+//        var favList = try? JSONDecoder().decode([String].self, from: favListStr.data(using: .utf8)!)
+//        if favList == nil {
+//            favList = []
+//        }
+//        // check cities in slides are needed, delete not needed
+//        for (name, inde) in mapOfFavCitiesNames {
+//            // remove deleted city in slides
+//            print(name)
+//            print(inde)
+//            print(slides[inde].ifFaved)
+//            print(slides[inde].cityFullName)
+//            if (favList?.contains(name))! == false && slides[inde].ifFaved == true {
+//                print("remove slide at ", inde)
+//                // first remove current subview from scrollview
+//                slides[inde].removeFromSuperview()
+//                // then remove from slides[]
+//                slides.remove(at: inde)
+//                // remove from map, which maintains all current fav cities to slides index
+//                mapOfFavCitiesNames.removeValue(forKey: name)
+//                // update all index after current subview
+//                for (checkName, checkInde) in mapOfFavCitiesNames{
+//                    if checkInde > inde {
+//                        mapOfFavCitiesNames[checkName] = checkInde - 1
+//                    }
+//                }
+//                // update page control
+//                pageControl.numberOfPages = slides.count
+//                pageControl.currentPage = inde - 1 // MARK: not working
+//                // set focused subview to previous one
+//                weatherPageScrollView.setContentOffset(CGPoint(x: inde * 414, y: 0), animated: true)
+//            }
+//            favList = favList?.filter { $0 != name}
+//            print("updated current cached favlist: ", favList)
+//        }
+//        var curIndex = slides.count
+//        for eachFullName in favList! {
+//            // add new city to slides
+//            let curSlide = Bundle.main.loadNibNamed("Slide", owner: self, options: nil)?.first as! Slide
+//            curSlide.locationLabel.text = String(eachFullName.split(separator: ",").first!)
+//            // MARK: update fav slide input here
+//            slides.append(curSlide)
+//            mapOfFavCitiesNames[eachFullName] = curIndex
+//            curIndex += 1
+//            pageControl.numberOfPages = slides.count
+//            print("current slides num, from updatefav: ", slides.count)
+//        }
+//        view.bringSubviewToFront(pageControl)
+//        setupSlideScrollView(slides: slides)
+//    }
+    
+    func updateFav() {
+
+        let favListStr = UserDefaults.standard.string(forKey: "favList") ?? ""
+        var favList = try? JSONDecoder().decode([String].self, from: favListStr.data(using: .utf8)!)
+        if favList == nil {
+            favList = []
+        }
+        print("updated favlist: ", favList)
+        // check cities in slides are needed, delete not needed
+        var itIndex = 1
+        while itIndex < slides.count {
+            if (favList?.contains(slides[itIndex].cityFullName))! == false && slides[itIndex].ifFaved == true {
+                print("remove slide at ", itIndex)
+                // first remove current subview from scrollview
+                slides[itIndex].removeFromSuperview()
+                // then remove from slides[]
+                slides.remove(at: itIndex)
+                // update page control
+                pageControl.numberOfPages = slides.count
+                pageControl.currentPage = itIndex - 1
+                // set focused subview to previous one
+                weatherPageScrollView.setContentOffset(CGPoint(x: (itIndex - 1) * 414, y: 0), animated: true)
+                itIndex -= 1
+            }
+            favList = favList?.filter { $0 != slides[itIndex].cityFullName}
+            itIndex += 1
+            
+        }
+        pageControl.numberOfPages = slides.count
+        // no condition to add to fav in searchbarcontroller, so comment out
+//        var curIndex = slides.count
+//        for eachFullName in favList! {
+//            // add new city to slides
+//            let curSlide = Bundle.main.loadNibNamed("Slide", owner: self, options: nil)?.first as! Slide
+//            curSlide.locationLabel.text = String(eachFullName.split(separator: ",").first!)
+//            // MARK: update fav slide input here
+//            slides.append(curSlide)
+//            mapOfFavCitiesNames[eachFullName] = curIndex
+//            curIndex += 1
+//            pageControl.numberOfPages = slides.count
+//            print("current slides num, from updatefav: ", slides.count)
+//        }
+        view.bringSubviewToFront(pageControl)
+        setupSlideScrollView(slides: slides)
+    }
+
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("current slides count: ", slides.count)
+        setupSlideScrollView(slides: slides)
+        pageControl.numberOfPages = slides.count // view might appear due to back from detail
+
+        view.bringSubviewToFront(pageControl)
+        
+        // restore delegation lost in view transfer process
+        for i in 1 ..< slides.count {
+            slides[i].favListDelegate = self
+        }
+
+
+        // location get
+        locationManager = CLLocationManager()
+        locationManager?.delegate = self
+        locationManager?.requestWhenInUseAuthorization()
+        locationManager?.requestLocation()
+
+        // refresh data for table view
+        slides[0].weeklyTableView.reloadData()
+    }
+    
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
         SwiftSpinner.show("Loading...")
-        
+
         let leftNavBarButton = UIBarButtonItem(customView: searchBar)
         self.navigationItem.leftBarButtonItem = leftNavBarButton
-        
-        
+
+
         weatherPageScrollView.delegate = self
-        
+
         slides = createSlides()
         setupSlideScrollView(slides: slides)
-        
+
         pageControl.numberOfPages = slides.count
         pageControl.currentPage = 0
         view.bringSubviewToFront(pageControl)
-        
-        
+
+
 //        for i in 0..<arrayOfWeeklyCellData.count {
 //            slides[i].weeklyTableView.dataSource = self
 //            slides[i].weeklyTableView.delegate = self
 //        }
-  
+
         slides[0].weeklyTableView.register(UINib(nibName: "WeeklyTableViewCell", bundle: nil), forCellReuseIdentifier: "WeeklyCellFromNib")
         slides[0].weeklyTableView.dataSource = self
         slides[0].weeklyTableView.delegate = self
-        
+
         // autocomplete
         searchBar.delegate = self
         autoCompleteTableView.dataSource = self
         autoCompleteTableView.delegate = self
         autoCompleteTableView.register(UINib(nibName: "CityTableViewCell", bundle: nil), forCellReuseIdentifier: "CityCellFromNib")
         autoCompleteTableView.isHidden = true
-        
+
         // location get
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         locationManager?.requestWhenInUseAuthorization()
         locationManager?.requestLocation()
-        
+
         // refresh data for table view
         slides[0].weeklyTableView.reloadData()
 
@@ -128,21 +256,37 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
     func createSlides() -> [Slide] {
 
         let slide1:Slide = Bundle.main.loadNibNamed("Slide", owner: self, options: nil)?.first as! Slide
+        
         // segue detect for detail tabs
         let tapOnCard = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         slide1.weatherCardView.addGestureRecognizer(tapOnCard)
         
+        var favSlides : [Slide] = []
+        let favListStr = UserDefaults.standard.string(forKey: "favList") ?? ""
+        var favList = try? JSONDecoder().decode([String].self, from: favListStr.data(using: .utf8)!)
+        if favList == nil {
+            favList = []
+        }
+        for i in 0 ..< favList!.count {
+            let curSlide = Bundle.main.loadNibNamed("Slide", owner: self, options: nil)?.first as! Slide
+            curSlide.locationLabel.text = String(favList![i].split(separator: ",").first!)
+            curSlide.cityFullName = favList![i]
+            curSlide.ifFaved = true
+            print("creat slides iffaved: ", curSlide.ifFaved)
+            curSlide.favListDelegate = self // delegate for update function
+            // MARK: update fav slide input here
+            mapOfFavCitiesNames[curSlide.cityFullName] = i + 1
+            favSlides.append(curSlide)
+        }
         
         
         
-        let slide2:Slide = Bundle.main.loadNibNamed("Slide", owner: self, options: nil)?.first as! Slide
-        slide2.locationLabel.text = "A real-life second view"
-        
-        
-        return [slide1, slide2]
+        return [slide1] + favSlides
     }
     
     func setupSlideScrollView(slides : [Slide]) {
+        print("Set up slideScrollView called")
+        
         weatherPageScrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         weatherPageScrollView.contentSize = CGSize(width: view.frame.width * CGFloat(slides.count), height: view.frame.height)
         weatherPageScrollView.isPagingEnabled = true
@@ -151,9 +295,14 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
             slides[i].frame = CGRect(x: view.frame.width * CGFloat(i), y: 0, width: view.frame.width, height: view.frame.height)
             if i == 0 {
                 slides[i].favButtonOutlet.isHidden = true
+            } else {
+                slides[i].ifFaved = true
             }
+            
             weatherPageScrollView.addSubview(slides[i])
         }
+        
+//        weatherPageScrollView.reloadInputViews()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -199,14 +348,15 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
         self.currentWindSpeed = String(format: "%.2f", currentJsonObj?["windSpeed"] as! Double) + " mph"
         self.currentVisibility = String(currentJsonObj?["visibility"] as! Double) + " km"
         self.currentPressure = String(currentJsonObj?["pressure"] as! Double) + " mb"
+        self.currentWeather = currentJsonObj ?? [:]
             
-        self.slides[0].tempLabel.text = self.currentTempStr
-        self.slides[0].summaryLabel.text = self.currentSummary
-        self.slides[0].humidityLabel.text = self.currentHumidity
-        self.slides[0].windSpeedLabel.text = self.currentWindSpeed
-        self.slides[0].visibilityLabel.text = self.currentVisibility
-        self.slides[0].pressureLabel.text = self.currentPressure
-        self.slides[0].weatherIcon.image = UIImage(named: self.summaryIconMap[self.currentIcon] ?? "weather-sunny")
+        slides[0].tempLabel.text = self.currentTempStr
+        slides[0].summaryLabel.text = self.currentSummary
+        slides[0].humidityLabel.text = self.currentHumidity
+        slides[0].windSpeedLabel.text = self.currentWindSpeed
+        slides[0].visibilityLabel.text = self.currentVisibility
+        slides[0].pressureLabel.text = self.currentPressure
+        slides[0].weatherIcon.image = UIImage(named: self.summaryIconMap[self.currentIcon] ?? "weather-sunny")
         print("Finish Current Callback")
         
         return
@@ -240,6 +390,7 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
         
         self.weeklyData = weekJsonObj?["data"] as! [[String:Any]]
         
+        arrayOfWeeklyCellData = []
         for i in 0 ... 7 {
             let currentCell = weeklyCellData(
                 weatherIconStr: self.summaryIconMap[self.weeklyData[i]["icon"] as! String] ?? "clear-day",
@@ -250,7 +401,7 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
             arrayOfWeeklyCellData.append(currentCell)
         }
         
-        print(arrayOfWeeklyCellData.count)
+        print("arrayOfWeeklyCellData count: ", arrayOfWeeklyCellData.count)
         slides[0].weeklyTableView.reloadData()
         SwiftSpinner.hide()
         
@@ -271,7 +422,7 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
                     // successfully get location
                     let firstLocation = placemarks?[0]
                     self.currentCityStr = firstLocation?.locality ?? "No Location"
-                    self.slides[0].locationLabel.text = self.currentCityStr
+                    slides[0].locationLabel.text = self.currentCityStr
                     print("location: " + (firstLocation?.locality ?? "No Location"))
                     
                     // make weather call
@@ -312,15 +463,11 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = Bundle.main.loadNibNamed("WeeklyTableViewCell", owner: self, options: nil)?.first as! WeeklyTableViewCell
-//        print("cellForRowAt")
         if tableView == autoCompleteTableView {
-            print("cellForRowAt for autocomplete")
             let cell = tableView.dequeueReusableCell(withIdentifier: "CityCellFromNib", for: indexPath) as! CityTableViewCell
             cell.cityLabel.text = cityList[indexPath.row]
             return cell
         } else {
-            print("cellForRowAt for weekly")
             let cell = tableView.dequeueReusableCell(withIdentifier: "WeeklyCellFromNib", for: indexPath) as! WeeklyTableViewCell
             cell.weatherImgView.image = UIImage(named: arrayOfWeeklyCellData[indexPath.row].weatherIconStr)
             cell.dateLabel.text = arrayOfWeeklyCellData[indexPath.row].dateStr
@@ -335,6 +482,7 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
         if tableView == autoCompleteTableView {
             self.selectedCityStr = self.cityList[indexPath.row]
             tableView.deselectRow(at: indexPath, animated: true)
+            tableView.isHidden = true
             performSegue(withIdentifier: "showSearchDetail", sender: self)
         }
     }
@@ -396,9 +544,24 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is DetailViewController {
-            
             let vc = segue.destination as? DetailViewController
             vc?.cityString = self.selectedCityStr            
+        } else if segue.destination is TabBarViewController {
+            let vc = segue.destination as? TabBarViewController
+            vc?.cityName = self.currentCityStr
+            vc?.weeklyData = self.weeklyData
+            vc?.weeklyIcon = self.weeklyIcon
+            vc?.weeklySummary = self.weeklySummary
+            vc?.weatherIconStr = self.summaryIconMap[self.currentIcon]!
+            vc?.weatherSummary = self.currentSummary
+            vc?.windSpeed = String(round(self.currentWeather["windSpeed"] as! Double * 100) / 100) + " mph"
+            vc?.pressure = String(round(self.currentWeather["pressure"] as! Double * 100) / 100) + " mb"
+            vc?.precipitation = String(round(self.currentWeather["precipIntensity"] as! Double * 100) / 100) + " mmph"
+            vc?.temperature = String(format:"%.0f",round(self.currentWeather["temperature"] as! Double )) + "°F"
+            vc?.humidity = String(round(self.currentWeather["humidity"] as! Double * 100) / 100) + " %"
+            vc?.visibility = String(round(self.currentWeather["visibility"] as! Double * 100) / 100) + " km"
+            vc?.cloudCover = String(round(self.currentWeather["cloudCover"] as! Double * 100) / 100) + " %"
+            vc?.ozone = String(round(self.currentWeather["ozone"] as! Double * 100) / 100) + " DU"
         }
     }
     

@@ -11,7 +11,7 @@ import Alamofire
 import SwiftSpinner
 
 
-class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, favListDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrayOfWeeklyCellData.count
     }
@@ -26,6 +26,9 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBOutlet weak var weatherView: UIView!
+    @IBAction func twitterBtn(_ sender: Any) {
+        print("thing")
+    }
     
     struct weeklyCellData {
         var weatherIconStr:String
@@ -33,6 +36,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var sunsetTimeStr:String
         var sunriseTimeStr:String
     }
+    
+    var city = ""
     
     var slideView = Slide()
     var cityString = ""
@@ -128,11 +133,73 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         performSegue(withIdentifier: "showTabFromDetail", sender: self)
     }
     
+
+    func updateFav() {
+        
+        let favListStr = UserDefaults.standard.string(forKey: "favList") ?? ""
+        var favList = try? JSONDecoder().decode([String].self, from: favListStr.data(using: .utf8)!)
+        if favList == nil {
+            favList = []
+        }
+        // check cities in slides are needed, delete not needed
+//        for (name, inde) in mapOfFavCitiesNames {
+//            // remove deleted city in slides
+//            print(name)
+//            print(inde)
+//            print(slides[inde].ifFaved)
+//            print(slides[inde].cityFullName)
+//            if (favList?.contains(name))! == false && slides[inde].ifFaved == true {
+//                print("remove slide at ", inde)
+//                // first remove current subview from scrollview
+//                slides[inde].removeFromSuperview()
+//                // then remove from slides[]
+//                slides.remove(at: inde)
+//                // remove from map, which maintains all current fav cities to slides index
+//                mapOfFavCitiesNames.removeValue(forKey: name)
+//                // update all index after current subview
+//                for (checkName, checkInde) in mapOfFavCitiesNames{
+//                    if checkInde > inde {
+//                        mapOfFavCitiesNames[checkName] = checkInde - 1
+//                    }
+//                }
+//            }
+//            favList = favList?.filter { $0 != name}
+//            print("updated current cached favlist: ", favList)
+//        }
+        var itIndex = 1
+        while itIndex < slides.count {
+            if (favList?.contains(slides[itIndex].cityFullName))! == false && slides[itIndex].ifFaved == true {
+                print("remove slide at ", itIndex)
+                // first remove current subview from scrollview
+                slides[itIndex].removeFromSuperview()
+                // then remove from slides[]
+                slides.remove(at: itIndex)
+                itIndex -= 1
+            }
+            favList = favList?.filter { $0 != slides[itIndex].cityFullName}
+            itIndex += 1
+        }
+        var curIndex = slides.count
+        for eachFullName in favList! {
+            // add new city to slides
+            let curSlide = Bundle.main.loadNibNamed("Slide", owner: self, options: nil)?.first as! Slide
+            curSlide.locationLabel.text = String(eachFullName.split(separator: ",").first!)
+            curSlide.cityFullName = eachFullName
+            // MARK: update fav slide input here
+            slides.append(curSlide)
+            mapOfFavCitiesNames[eachFullName] = curIndex
+            curIndex += 1
+            print("current slides num, from updatefav: ", slides.count)
+        }
+    }
+    
+    
     override func viewDidLoad() {
-        let city = String(self.cityString.split(separator: ",").first!)
+        city = String(self.cityString.split(separator: ",").first!)
         SwiftSpinner.show("Fetching Weather Details for " + city + "...")
         super.viewDidLoad()
         
+        self.title = city
         
         slideView = (Bundle.main.loadNibNamed("Slide", owner: self, options: nil)?.first as? Slide)!
         self.weatherView.addSubview(slideView)
@@ -146,6 +213,10 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         slideView.weeklyTableView.register(UINib(nibName: "WeeklyTableViewCell", bundle: nil), forCellReuseIdentifier: "WeeklyCellFromNib")
         
         slideView.locationLabel.text = city
+        
+        slideView.cityFullName = cityString
+        
+        slideView.favListDelegate = self
         
         // segue detect for detail tabs
         let tapOnCard = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
@@ -199,9 +270,9 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 self.weeklyWeatherInfo = value["daily"] as? [String: Any] ?? [:]
                 
                 // set display info
-                print(self.currentWeatherInfo)
+//                print(self.currentWeatherInfo)
                 self.currentWeatherCallback(currentJsonObj: self.currentWeatherInfo)
-                print(self.weeklyWeatherInfo)
+//                print(self.weeklyWeatherInfo)
                 self.weeklyWeatherCallback(weekJsonObj: self.weeklyWeatherInfo)
                 SwiftSpinner.hide()
                 
@@ -210,6 +281,26 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.destination is TabBarViewController {
+            let vc = segue.destination as? TabBarViewController
+            vc?.cityName = self.city
+            vc?.weeklyData = self.weeklyData
+            vc?.weeklyIcon = self.weeklyIcon
+            vc?.weeklySummary = self.weeklySummary
+            vc?.weatherIconStr = self.summaryIconMap[self.currentIcon]!
+            vc?.weatherSummary = self.currentSummary
+            vc?.windSpeed = String(round(self.currentWeatherInfo["windSpeed"] as! Double * 100) / 100) + " mph"
+            vc?.pressure = String(round(self.currentWeatherInfo["pressure"] as! Double * 100) / 100) + " mb"
+            vc?.precipitation = String(round(self.currentWeatherInfo["precipIntensity"] as! Double * 100) / 100) + " mmph"
+            vc?.temperature = String(format:"%.0f",round(self.currentWeatherInfo["temperature"] as! Double )) + "°F"
+            vc?.humidity = String(round(self.currentWeatherInfo["humidity"] as! Double * 100) / 100) + " %"
+            vc?.visibility = String(round(self.currentWeatherInfo["visibility"] as! Double * 100) / 100) + " km"
+            vc?.cloudCover = String(round(self.currentWeatherInfo["cloudCover"] as! Double * 100) / 100) + " %"
+            vc?.ozone = String(round(self.currentWeatherInfo["ozone"] as! Double * 100) / 100) + " DU"
+        }
     }
     
     
