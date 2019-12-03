@@ -273,6 +273,12 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
         super.viewDidLoad()
         
         SwiftSpinner.show("Loading...")
+        
+        
+        let textFieldInsideSearchBar = searchBar.value(forKey: "searchField") as? UITextField
+
+        textFieldInsideSearchBar?.textColor = UIColor(red: 0.635, green: 0.635, blue: 0.635, alpha: 1)
+        textFieldInsideSearchBar?.backgroundColor = UIColor.white
 
         let leftNavBarButton = UIBarButtonItem(customView: searchBar)
         self.navigationItem.leftBarButtonItem = leftNavBarButton

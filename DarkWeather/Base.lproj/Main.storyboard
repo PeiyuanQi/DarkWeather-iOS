@@ -529,6 +529,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="UCo-vK-faQ">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="0.82435252568493156" alpha="0.3046607448630137" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="rYd-bL-SIe"/>
@@ -556,6 +557,6 @@
         <image name="weather-windy" width="80" height="80"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="uxA-LV-1he"/>
+        <segue reference="MQ4-nB-f95"/>
     </inferredMetricsTieBreakers>
 </document>
