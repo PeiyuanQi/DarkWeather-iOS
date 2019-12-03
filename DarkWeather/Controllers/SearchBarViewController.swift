@@ -541,10 +541,19 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
         if tableView == autoCompleteTableView {
             print("city table: " + String(cityList.count))
             return cityList.count
-        } else {
+        } else if tableView == slides[0].weeklyTableView {
             print("week table: " + String(curLocArrayOfWeeklyCellData.count))
             return curLocArrayOfWeeklyCellData.count
+        } else {
+            for i in 1 ..< slides.count {
+                if tableView == slides[i].weeklyTableView {
+                    print("week table: " + String(slides[i].cityCardData.arrayOfWeeklyCellDataInFav.count))
+                    return slides[i].cityCardData.arrayOfWeeklyCellDataInFav.count
+                }
+            }
         }
+        // should not happen
+        return curLocArrayOfWeeklyCellData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -560,7 +569,6 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
             cell.sunsetTimeLabel.text = curLocArrayOfWeeklyCellData[indexPath.row].sunsetTimeStr
             return cell
         }
-        // MARK: to figure how to do it
         for i in 1 ..< slides.count {
             if tableView == slides[i].weeklyTableView {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "WeeklyCellFromNib-" + String(i), for: indexPath) as! WeeklyTableViewCell
