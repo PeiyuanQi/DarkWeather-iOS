@@ -10,6 +10,12 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
 
+    @IBAction func twitterShare(_ sender: Any) {
+        
+        let textString = "The current temperature at " + self.cityName + " is " + self.temperature + ". The weather conditions are " + self.weatherSummary + " #CSCI571WeatherSearch"
+        guard let url = URL(string: "https://twitter.com/intent/tweet?text=" + textString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!) else {return}
+        UIApplication.shared.open(url)
+    }
     var currentWeather:[String:Any] = [:]
     var weeeklyWeather:[String:Any] = [:]
     
@@ -63,7 +69,8 @@ class TabBarViewController: UITabBarController {
         weeklyTab.weeklySummary = self.weeklySummary
         weeklyTab.weeklyIcon = self.weeklyIcon
         
-        
+        let photoTab = self.viewControllers![2] as! PhotoViewController
+        photoTab.cityName = self.cityName
 
         // Do any additional setup after loading the view.
     }

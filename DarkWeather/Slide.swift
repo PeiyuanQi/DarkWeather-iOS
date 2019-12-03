@@ -18,6 +18,25 @@ class Slide: UIView {
     var ifFaved = false
     var cityFullName = ""
     var favListDelegate: favListDelegate?
+    var lat : String = ""
+    var lng : String = ""
+    var cityCardData = cityCardDataStruct()
+    
+    struct cityCardDataStruct {
+        var weatherIconStr : String = ""
+        var weatherSummary : String = ""
+        var tempStr : String = ""
+        var cityName : String = ""
+        var humidity = ""
+        var windSpeed = ""
+        var visibility = ""
+        var pressure = ""
+        var weeklySummaryInFav = ""
+        var weeklyIconInFav = ""
+        var arrayOfWeeklyCellDataInFav : [weeklyCellData] = []
+        var currentWeatherInFav : [String:Any] = [:]
+        var weeklyWeatherDataInFav : [[String:Any]] = []
+    }
     
     
     @IBOutlet weak var locationLabel: UILabel!

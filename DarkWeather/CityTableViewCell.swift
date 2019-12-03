@@ -13,6 +13,7 @@ class CityTableViewCell: UITableViewCell {
     @IBOutlet weak var cityLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.7)
         // Initialization code
     }
 

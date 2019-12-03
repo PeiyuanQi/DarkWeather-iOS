@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="4Sb-8y-PvO">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="808.00000000000182"/>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" fixedFrame="YES" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zyN-EO-4bw">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="729"/>
@@ -79,7 +79,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="pWL-5i-UBv">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="808.00000000000182"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -116,23 +116,35 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="37s-Ii-kV9">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="725.00000000000182"/>
                             </imageView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ndg-5F-Xtr">
+                                <rect key="frame" x="10" y="0.0" width="394" height="725"/>
+                                <viewLayoutGuide key="contentLayoutGuide" id="eSz-dz-9Dw"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="qJL-v6-bQh"/>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="kJb-RW-oCJ" firstAttribute="bottom" secondItem="37s-Ii-kV9" secondAttribute="bottom" id="BFF-M2-EMa"/>
                             <constraint firstItem="37s-Ii-kV9" firstAttribute="leading" secondItem="kJb-RW-oCJ" secondAttribute="leading" id="BYW-Ep-zQ3"/>
+                            <constraint firstItem="kJb-RW-oCJ" firstAttribute="trailing" secondItem="ndg-5F-Xtr" secondAttribute="trailing" constant="10" id="IKr-qq-dQJ"/>
                             <constraint firstItem="37s-Ii-kV9" firstAttribute="top" secondItem="kJb-RW-oCJ" secondAttribute="top" id="NXK-Nx-Pxh"/>
+                            <constraint firstItem="ndg-5F-Xtr" firstAttribute="bottom" secondItem="kJb-RW-oCJ" secondAttribute="bottom" id="VvS-ea-vcl"/>
                             <constraint firstItem="kJb-RW-oCJ" firstAttribute="trailing" secondItem="37s-Ii-kV9" secondAttribute="trailing" id="WdA-P1-XPJ"/>
+                            <constraint firstItem="ndg-5F-Xtr" firstAttribute="leading" secondItem="kJb-RW-oCJ" secondAttribute="leading" constant="10" id="b4D-yV-iEj"/>
+                            <constraint firstItem="ndg-5F-Xtr" firstAttribute="top" secondItem="kJb-RW-oCJ" secondAttribute="top" id="tEG-t6-5rz"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="kJb-RW-oCJ"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="PHOTOS" image="ios-photos" id="OBe-wM-BRQ"/>
+                    <connections>
+                        <outlet property="photoScrollView" destination="ndg-5F-Xtr" id="xmj-AD-HaT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dyj-np-st2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-91" y="1140"/>
+            <point key="canvasLocation" x="-91.304347826086968" y="1139.7321428571429"/>
         </scene>
         <!--WEEKLY-->
         <scene sceneID="MMF-9M-XHn">
@@ -143,13 +155,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="5Rm-24-bgg">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="808.00000000000182"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0q7-61-W38">
                                 <rect key="frame" x="20" y="20" width="374" height="210"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Light rain on Wednesday and Thursday" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fbg-az-VdO">
-                                        <rect key="frame" x="169" y="55" width="183" height="102"/>
+                                        <rect key="frame" x="158.5" y="55" width="193.5" height="102"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="183" id="eeo-kj-bxt"/>
                                         </constraints>
@@ -158,7 +170,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" image="weather-pouring" translatesAutoresizingMaskIntoConstraints="NO" id="Vle-Y1-Js0">
-                                        <rect key="frame" x="22" y="39" width="132" height="132"/>
+                                        <rect key="frame" x="22" y="39" width="121.5" height="132"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -217,7 +229,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="jyj-fe-XC7">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="725.00000000000182"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2M5-O1-M4F">
                                 <rect key="frame" x="15" y="39" width="385" height="686"/>
@@ -406,8 +418,8 @@
                                                 <rect key="frame" x="15" y="8" width="90" height="90"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mbk-O5-lON">
-                                                <rect key="frame" x="0.0" y="106" width="120" height="25"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mbk-O5-lON">
+                                                <rect key="frame" x="0.0" y="106" width="120" height="47"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
@@ -488,7 +500,13 @@
         <scene sceneID="kN2-VJ-pEN">
             <objects>
                 <tabBarController id="QKw-Qg-NXi" customClass="TabBarViewController" customModule="DarkWeather" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="buo-tv-4ic"/>
+                    <navigationItem key="navigationItem" id="buo-tv-4ic">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="twitter" id="umr-yt-1dZ">
+                            <connections>
+                                <action selector="twitterShare:" destination="QKw-Qg-NXi" id="8AE-rl-rb5"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0Qy-P3-TbP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>

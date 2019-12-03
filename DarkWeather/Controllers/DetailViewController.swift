@@ -13,21 +13,24 @@ import SwiftSpinner
 
 class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, favListDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrayOfWeeklyCellData.count
+        return curLocArrayOfWeeklyCellData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WeeklyCellFromNib", for: indexPath) as! WeeklyTableViewCell
-        cell.weatherImgView.image = UIImage(named: arrayOfWeeklyCellData[indexPath.row].weatherIconStr)
-        cell.dateLabel.text = arrayOfWeeklyCellData[indexPath.row].dateStr
-        cell.sunriseTimeLabel.text = arrayOfWeeklyCellData[indexPath.row].sunriseTimeStr
-        cell.sunsetTimeLabel.text = arrayOfWeeklyCellData[indexPath.row].sunsetTimeStr
+        cell.weatherImgView.image = UIImage(named: curLocArrayOfWeeklyCellData[indexPath.row].weatherIconStr)
+        cell.dateLabel.text = curLocArrayOfWeeklyCellData[indexPath.row].dateStr
+        cell.sunriseTimeLabel.text = curLocArrayOfWeeklyCellData[indexPath.row].sunriseTimeStr
+        cell.sunsetTimeLabel.text = curLocArrayOfWeeklyCellData[indexPath.row].sunsetTimeStr
         return cell
     }
     
     @IBOutlet weak var weatherView: UIView!
     @IBAction func twitterBtn(_ sender: Any) {
-        print("thing")
+        let textString = "The current temperature at " + self.city + " is " + self.currentTempStr + ". The weather conditions are " + self.currentSummary + " #CSCI571WeatherSearch"
+        guard let url = URL(string: "https://twitter.com/intent/tweet?text=" + textString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!) else {return}
+        UIApplication.shared.open(url)
+
     }
     
     struct weeklyCellData {
@@ -46,42 +49,31 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var currentTempStr = "", currentSummary = "", currentIcon = "", currentHumidity = "", currentWindSpeed = "", currentVisibility = "", currentPressure = ""
     var weeklySummary = "", weeklyIcon = ""
     var weeklyData:[[String:Any]] = []
-    var arrayOfWeeklyCellData:[weeklyCellData] = []
-    let summaryIconMap = [
-        "clear-day": "weather-sunny",
-        "clear-night" : "weather-night",
-        "rain" : "weather-rainy",
-        "sleet" : "weather-snowy-rainy",
-        "snow" : "weather-snowy",
-        "wind" : "weather-windy-variant",
-        "fog" : "weather-fog",
-        "cloudy" : "weather-cloudy",
-        "partly-cloudy-night" : "weather-night-partly-cloudy",
-        "partly-cloudy-day" : "weather-partly-cloudy",
-    ]
+    var curLocArrayOfWeeklyCellData:[weeklyCellData] = []
+
     
     func currentWeatherCallback(currentJsonObj: [String:Any]?) -> Void{
     //        print(currentJsonObj!)
             
-            self.currentTempStr = String(format:"%.0f", currentJsonObj?["temperature"] as! Double) + "°F"
-            self.currentSummary = currentJsonObj?["summary"] as! String
-            self.currentIcon = currentJsonObj?["icon"] as! String
-            self.currentHumidity = String(format: "%.1f", round(currentJsonObj?["humidity"] as! Double * 1000 / 10)) + " %"
-            self.currentWindSpeed = String(format: "%.2f", currentJsonObj?["windSpeed"] as! Double) + " mph"
-            self.currentVisibility = String(currentJsonObj?["visibility"] as! Double) + " km"
-            self.currentPressure = String(currentJsonObj?["pressure"] as! Double) + " mb"
-                
-            self.slideView.tempLabel.text = self.currentTempStr
-            self.slideView.summaryLabel.text = self.currentSummary
-            self.slideView.humidityLabel.text = self.currentHumidity
-            self.slideView.windSpeedLabel.text = self.currentWindSpeed
-            self.slideView.visibilityLabel.text = self.currentVisibility
-            self.slideView.pressureLabel.text = self.currentPressure
-            self.slideView.weatherIcon.image = UIImage(named: self.summaryIconMap[self.currentIcon] ?? "weather-sunny")
-            print("Finish Current Callback")
+        self.currentTempStr = String(format:"%.0f", currentJsonObj?["temperature"] as! Double) + "°F"
+        self.currentSummary = currentJsonObj?["summary"] as! String
+        self.currentIcon = currentJsonObj?["icon"] as! String
+        self.currentHumidity = String(format: "%.1f", round(currentJsonObj?["humidity"] as! Double * 1000 / 10)) + " %"
+        self.currentWindSpeed = String(format: "%.2f", currentJsonObj?["windSpeed"] as! Double) + " mph"
+        self.currentVisibility = String(currentJsonObj?["visibility"] as! Double) + " km"
+        self.currentPressure = String(currentJsonObj?["pressure"] as! Double) + " mb"
             
-            return
-        }
+        self.slideView.tempLabel.text = self.currentTempStr
+        self.slideView.summaryLabel.text = self.currentSummary
+        self.slideView.humidityLabel.text = self.currentHumidity
+        self.slideView.windSpeedLabel.text = self.currentWindSpeed
+        self.slideView.visibilityLabel.text = self.currentVisibility
+        self.slideView.pressureLabel.text = self.currentPressure
+        self.slideView.weatherIcon.image = UIImage(named: summaryIconMap[self.currentIcon] ?? "weather-sunny")
+        print("Finish Current Callback")
+        
+        return
+    }
     
     func translateDate(timestamp: TimeInterval) -> String{
         let date = Date(timeIntervalSince1970: timestamp)
@@ -113,15 +105,15 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             for i in 0 ... 7 {
                 let currentCell = weeklyCellData(
-                    weatherIconStr: self.summaryIconMap[self.weeklyData[i]["icon"] as! String] ?? "clear-day",
+                    weatherIconStr: summaryIconMap[self.weeklyData[i]["icon"] as! String] ?? "clear-day",
                     dateStr: self.translateDate(timestamp: self.weeklyData[i]["time"] as! TimeInterval),
                     sunsetTimeStr: self.translatePST(timestamp: self.weeklyData[i]["sunsetTime"] as! TimeInterval),
                     sunriseTimeStr: self.translatePST(timestamp: self.weeklyData[i]["sunriseTime"] as! TimeInterval)
                 )
-                arrayOfWeeklyCellData.append(currentCell)
+                curLocArrayOfWeeklyCellData.append(currentCell)
             }
             
-            print(arrayOfWeeklyCellData.count)
+            print(curLocArrayOfWeeklyCellData.count)
             slideView.weeklyTableView.reloadData()
             
             return
@@ -142,30 +134,6 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             favList = []
         }
         // check cities in slides are needed, delete not needed
-//        for (name, inde) in mapOfFavCitiesNames {
-//            // remove deleted city in slides
-//            print(name)
-//            print(inde)
-//            print(slides[inde].ifFaved)
-//            print(slides[inde].cityFullName)
-//            if (favList?.contains(name))! == false && slides[inde].ifFaved == true {
-//                print("remove slide at ", inde)
-//                // first remove current subview from scrollview
-//                slides[inde].removeFromSuperview()
-//                // then remove from slides[]
-//                slides.remove(at: inde)
-//                // remove from map, which maintains all current fav cities to slides index
-//                mapOfFavCitiesNames.removeValue(forKey: name)
-//                // update all index after current subview
-//                for (checkName, checkInde) in mapOfFavCitiesNames{
-//                    if checkInde > inde {
-//                        mapOfFavCitiesNames[checkName] = checkInde - 1
-//                    }
-//                }
-//            }
-//            favList = favList?.filter { $0 != name}
-//            print("updated current cached favlist: ", favList)
-//        }
         var itIndex = 1
         while itIndex < slides.count {
             if (favList?.contains(slides[itIndex].cityFullName))! == false && slides[itIndex].ifFaved == true {
@@ -179,20 +147,28 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             favList = favList?.filter { $0 != slides[itIndex].cityFullName}
             itIndex += 1
         }
+        // rest cities in favlist are new and will be added into slides
         var curIndex = slides.count
         for eachFullName in favList! {
             // add new city to slides
             let curSlide = Bundle.main.loadNibNamed("Slide", owner: self, options: nil)?.first as! Slide
             curSlide.locationLabel.text = String(eachFullName.split(separator: ",").first!)
             curSlide.cityFullName = eachFullName
-            // MARK: update fav slide input here
+            // Set up slide data
+            // MARK: todo
+            curSlide.lat = self.clickedLat
+            curSlide.lng = self.clickedLng
+            curSlide.ifFaved = true
+            // rest data will be populated in SearchBarViewController viewwillappear
+            // add current new slide to slides
             slides.append(curSlide)
-            mapOfFavCitiesNames[eachFullName] = curIndex
             curIndex += 1
-            print("current slides num, from updatefav: ", slides.count)
+//            print("current slides num, from updatefav: ", slides.count)
         }
     }
     
+    var clickedLat = ""
+    var clickedLng = ""
     
     override func viewDidLoad() {
         city = String(self.cityString.split(separator: ",").first!)
@@ -221,10 +197,13 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // segue detect for detail tabs
         let tapOnCard = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         slideView.weatherCardView.addGestureRecognizer(tapOnCard)
+        slideView.weeklyTableView.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.4)
+        slideView.weeklyTableView.layer.cornerRadius = 5
+        slideView.weeklyTableView.layer.borderWidth = 1
+        slideView.weeklyTableView.layer.borderColor = CGColor(srgbRed: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
         
-        var clickedLat = ""
-        var clickedLng = ""
+
         
         let geoURL = "http://webhw9-12345.appspot.com/latlng"
         Alamofire.request(geoURL,
@@ -241,19 +220,19 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 print("Malformed data received from getCurrentlyWeekly service")
                 return
             }
-            clickedLat = String(format:"%.4f", value["lat"] as! Double)
-            clickedLng = String(format:"%.4f", value["lng"] as! Double)
+            self.clickedLat = String(format:"%.4f", value["lat"] as! Double)
+            self.clickedLng = String(format:"%.4f", value["lng"] as! Double)
             
             
             let weatherURL = "http://webhw9-12345.appspot.com/weather/currently"
             
-            print("clickedlng: ",clickedLng)
-            print("clickedlng: ",clickedLat)
+            print("clickedlng: ",self.clickedLng)
+            print("clickedlng: ",self.clickedLat)
             
             Alamofire.request(weatherURL,
                       method: .get,
-                      parameters: ["lat": clickedLat,
-                                   "lng": clickedLng])
+                      parameters: ["lat": self.clickedLat,
+                                   "lng": self.clickedLng])
             .validate()
             .responseJSON { response in
                 guard response.result.isSuccess else {
@@ -280,7 +259,6 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
 
-        // Do any additional setup after loading the view.
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -290,7 +268,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             vc?.weeklyData = self.weeklyData
             vc?.weeklyIcon = self.weeklyIcon
             vc?.weeklySummary = self.weeklySummary
-            vc?.weatherIconStr = self.summaryIconMap[self.currentIcon]!
+            vc?.weatherIconStr = summaryIconMap[self.currentIcon]!
             vc?.weatherSummary = self.currentSummary
             vc?.windSpeed = String(round(self.currentWeatherInfo["windSpeed"] as! Double * 100) / 100) + " mph"
             vc?.pressure = String(round(self.currentWeatherInfo["pressure"] as! Double * 100) / 100) + " mb"
