@@ -106,7 +106,7 @@ class SearchBarViewController: UIViewController, UIScrollViewDelegate, CLLocatio
                 print("remove slide at ", itIndex)
                 // first remove current subview from scrollview
                 slides[itIndex].removeFromSuperview()
-                self.weatherPageScrollView.makeToast((slides[itIndex].locationLabel.text ?? "Default") + " was removed from the Favorite List")
+                self.view.makeToast((slides[itIndex].locationLabel.text ?? "Default") + " was removed from the Favorite List")
                 // then remove from slides[]
                 slides.remove(at: itIndex)
                 // update page control
