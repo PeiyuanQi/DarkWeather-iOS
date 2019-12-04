@@ -4,20 +4,20 @@ An iOS 13 Weather App
 
 
 
-![Picture2](/Users/peiyuanqi/Documents/CSCI571/website/hw9ios/DarkWeather/DarkWeather/readmeimg/Picture2.png)
+![Picture2](./readmeimg/Picture2.png)
 
-![Picture1](/Users/peiyuanqi/Documents/CSCI571/website/hw9ios/DarkWeather/DarkWeather/readmeimg/Picture1.png)
+![Picture1](./readmeimg/Picture1.png)
 
 
 
-![Picture3-5](/Users/peiyuanqi/Documents/CSCI571/website/hw9ios/DarkWeather/DarkWeather/readmeimg/Picture3-5.png)
+![Picture3-5](./readmeimg/Picture3-5.png)
 
-![Picture3](/Users/peiyuanqi/Documents/CSCI571/website/hw9ios/DarkWeather/DarkWeather/readmeimg/Picture3.png)
+![Picture3](./readmeimg/Picture3.png)
 
-![Picture4](/Users/peiyuanqi/Documents/CSCI571/website/hw9ios/DarkWeather/DarkWeather/readmeimg/Picture4.png)
+![Picture4](./readmeimg/Picture4.png)
 
-![Picture5](/Users/peiyuanqi/Documents/CSCI571/website/hw9ios/DarkWeather/DarkWeather/readmeimg/Picture5.png)
+![Picture5](./readmeimg/Picture5.png)
 
-![Picture6](/Users/peiyuanqi/Documents/CSCI571/website/hw9ios/DarkWeather/DarkWeather/readmeimg/Picture6.png)
+![Picture6](>/readmeimg/Picture6.png)
 
-![Picture7](/Users/peiyuanqi/Documents/CSCI571/website/hw9ios/DarkWeather/DarkWeather/readmeimg/Picture7.png)
+![Picture7](./readmeimg/Picture7.png)
